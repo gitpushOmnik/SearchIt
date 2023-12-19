@@ -1,27 +1,38 @@
-//
-//  FormButtonsView.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/21/23.
-//
+/**
+ `FormButtonsView`
 
+ A SwiftUI view containing submit and clear buttons for the search form.
+
+ - Author: Omkar Nikhal
+ - Date: 11/21/23
+ */
 import SwiftUI
 
 struct FormButtonsView: View {
     
+    /// Observed object for the search form view model.
     @ObservedObject var searchFormViewModel: SearchFormViewModel
+    
+    /// Observed object for the search results view model.
     @ObservedObject var searchResultsViewModel: SearchResultsViewModel
-        
+    
+    /// Initializes a `FormButtonsView` with the provided search form and search results view models.
+    /// - Parameters:
+    ///   - searchFormViewModel: Observed object for the search form view model.
+    ///   - searchResultsViewModel: Observed object for the search results view model.
     init(_ searchFormViewModel: SearchFormViewModel, _ searchResultsViewModel: SearchResultsViewModel) {
         self.searchFormViewModel = searchFormViewModel
         self.searchResultsViewModel = searchResultsViewModel
     }
     
     var body: some View {
+        // Horizontal stack for buttons
         HStack {
             Spacer()
             
+            // Submit button
             Button(action: {
+                // Validate search form and get search results
                 if searchFormViewModel.validateSearchForm() {
                     let searchQueryString = searchFormViewModel.generateSearchResultsQuery()
                     searchResultsViewModel.getSearchResultItems(searchQueryString)
@@ -38,7 +49,9 @@ struct FormButtonsView: View {
             
             Spacer()
             
+            // Clear button
             Button(action: {
+                // Clear search form and search results
                 searchFormViewModel.clearForm()
                 searchResultsViewModel.clearSearchResults()
             }){
@@ -56,6 +69,7 @@ struct FormButtonsView: View {
     }
 }
 
+// MARK: - FormButtonsView Constants
 extension FormButtonsView {
     static let submitLabel = "Submit"
     static let clearLabel = "Clear"

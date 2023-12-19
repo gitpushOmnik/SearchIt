@@ -1,20 +1,28 @@
-//
-//  SimilarItemsView.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/23/23.
-//
+/**
+ `SimilarItemsView`
 
+ A SwiftUI view to display a list of similar items, allowing users to sort them based on various criteria.
+
+ - Author: Omkar Nikhal
+ - Date: 11/23/23
+ */
 import SwiftUI
-import Kingfisher
 
 struct SimilarItemsView: View {
     
+    /// The view model for item details.
     @ObservedObject var itemDetailsViewModel: ItemDetailsViewModel
+    
+    /// The selected sorting category.
     @State var selectedCategory: SortOption = .default
+    
+    /// The selected sorting order.
     @State var selectedOrder: SortOrder = .ascending
+    
+    /// A flag to control the visibility of the progress view.
     @State var showProgressView = true
     
+    /// The sorted list of similar items based on the selected sorting category and order.
     var sortedSimilarItems: [SimilarItem] {
         let sortedSimilarItems = itemDetailsViewModel.currentItem?.itemSimilarItems?.sorted(by: selectedCategory.categorySorter)
         if let sortedSimilarItems = sortedSimilarItems {
@@ -23,9 +31,20 @@ struct SimilarItemsView: View {
         return []
     }
     
+    /**
+     Initializes a `SimilarItemsView` with the required view model.
+
+     - Parameters:
+        - itemDetailsViewModel: The view model for item details.
+     */
+    init(_ itemDetailsViewModel: ItemDetailsViewModel) {
+        self.itemDetailsViewModel = itemDetailsViewModel
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             if showProgressView {
+                // Display a progress view while loading data.
                 ProgressView()
             } else {
                 if sortedSimilarItems.isEmpty {
@@ -36,6 +55,7 @@ struct SimilarItemsView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
+                    // Picker for sorting category
                     Picker("", selection: $selectedCategory) {
                         ForEach(SortOption.allCases, id: \.self) { option in
                             Text(option.rawValue)
@@ -45,7 +65,7 @@ struct SimilarItemsView: View {
                     .padding(.horizontal)
                     .padding(.top, Self.sortByTopPadding)
                     .onChange(of: selectedCategory) {
-                        selectedOrder = .ascending 
+                        selectedOrder = .ascending
                     }
                     
                     if selectedCategory.rawValue != Self.defaultText {
@@ -56,6 +76,7 @@ struct SimilarItemsView: View {
                             .padding(.top, Self.orderTopPadding)
                             .padding(.horizontal)
                         
+                        // Picker for sorting order
                         Picker("", selection: $selectedOrder) {
                             ForEach(SortOrder.allCases, id: \.self) {
                                 Text($0.rawValue)
@@ -66,6 +87,7 @@ struct SimilarItemsView: View {
                         .padding(.top, Self.orderPickerTopPadding)
                     }
                     
+                    // Display similar items in a scrollable grid
                     ScrollView {
                         LazyVGrid(columns: Self.columns, spacing: 10) {
                             ForEach(sortedSimilarItems) { similarItem in
@@ -79,12 +101,14 @@ struct SimilarItemsView: View {
         }
         .padding(.top, Self.similarItemsViewTopPadding)
         .onAppear {
+            // Simulate a delay before hiding the progress view.
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 showProgressView = false
             }
         }
     }
     
+    /// Update the order picker when the sorting category changes.
     private func updateOrderPicker() {
         selectedOrder = .ascending
     }
@@ -92,20 +116,37 @@ struct SimilarItemsView: View {
 
 extension SimilarItemsView {
     
+    /// The text for "Sort By" label.
     static let sortByText = "Sort By"
+    
+    /// The default text for sorting.
     static let defaultText = "Default"
+    
+    /// The text for "Order" label.
     static let orderText = "Order"
+    
+    /// The top padding for "Sort By" section.
     static let sortByTopPadding = 3.0
+    
+    /// The top padding for "Order" section.
     static let orderTopPadding = 13.0
+    
+    /// The top padding for the order picker.
     static let orderPickerTopPadding = 6.0
+    
+    /// The top padding for the scroll view.
     static let scrollViewTopPadding = 15.0
+    
+    /// The top padding for the entire view.
     static let similarItemsViewTopPadding = 12.0
     
+    /// The grid columns for the lazy grid.
     static var columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
     
+    /// Enumeration for sorting options.
     enum SortOption: String, CaseIterable {
         case `default` = "Default"
         case name = "Name"
@@ -113,6 +154,7 @@ extension SimilarItemsView {
         case daysLeft = "Days Left"
         case shipping = "Shipping"
 
+        /// Closure to determine the sorting order based on the selected option.
         var categorySorter: (SimilarItem, SimilarItem) -> Bool {
             switch self {
                 case .default: return { $0.itemIndex ?? 0 < $1.itemIndex ?? 0 }
@@ -124,6 +166,7 @@ extension SimilarItemsView {
         }
     }
     
+    /// Enumeration for sorting order.
     enum SortOrder: String, CaseIterable {
         case ascending = "Ascending"
         case descending = "Descending"

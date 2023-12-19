@@ -1,12 +1,12 @@
-//
-//  FindItemsAdvancedResponse.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/22/23.
-//
+/**
+ `FindItemsAdvancedResponse`
 
+ A data structure representing the response for finding advanced search items.
+
+ - Author: Omkar Nikhal
+ - Date: 11/22/23
+ */
 import Foundation
-import SwiftUI
 
 struct FindItemsAdvancedResponse: Codable {
     let findItemsAdvancedResponse: [SearchResults]?

@@ -1,10 +1,11 @@
-//
-//  ZipcodeResponse.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 12/3/23.
-//
+/**
+ `ZipcodeResponse`
 
+ A data structure representing the response containing postal codes.
+
+ - Author: Omkar Nikhal
+ - Date: 12/3/23
+ */
 import Foundation
 
 struct ZipcodeResponse: Codable {

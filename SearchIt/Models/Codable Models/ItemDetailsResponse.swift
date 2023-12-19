@@ -1,10 +1,11 @@
-//
-//  ItemDetailsResponse.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/23/23.
-//
+/**
+ `ItemDetailsResponse`
 
+ A data structure representing the response containing item details, similar items, and Google Photos.
+
+ - Author: Omkar Nikhal
+ - Date: 11/23/23
+ */
 import Foundation
 
 struct ItemDetailsResponse: Codable {

@@ -1,23 +1,33 @@
-//
-//  ItemPhotosView.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/23/23.
-//
+/**
+ `ItemPhotosView`
 
+ A SwiftUI view to display photos of an item, including images powered by Google.
+
+ - Author: Omkar Nikhal
+ - Date: 11/23/23
+ */
 import SwiftUI
 import Kingfisher
 
 struct ItemPhotosView: View {
     
+    /// The view model responsible for handling item details.
     @ObservedObject var itemDetailsViewModel: ItemDetailsViewModel
+    
+    /// A boolean indicating whether to show the progress view.
     @State var showProgressView = true
+    
+    init(_ itemDetailsViewModel: ItemDetailsViewModel) {
+        self.itemDetailsViewModel = itemDetailsViewModel
+    }
     
     var body: some View {
         VStack(spacing: 0) {
+            // Show progress view while loading
             if showProgressView {
                 ProgressView()
             } else {
+                // Display powered by Google text and logo
                 HStack {
                     Text(Self.poweredByText)
                     
@@ -27,6 +37,7 @@ struct ItemPhotosView: View {
                 }
                 .padding(.bottom, Self.poweredImageBottomPadding)
                 
+                // Display Google-powered item photos
                 VStack(spacing: 0) {
                     ScrollView {
                         ForEach(itemDetailsViewModel.currentItem?.itemGooglePhotos ?? [], id:\.self) { itemPictureURL in
@@ -48,6 +59,7 @@ struct ItemPhotosView: View {
         .padding(.top, Self.itemPhotosViewTopPadding)
         .padding(.horizontal)
         .onAppear {
+            // Hide progress view after a short delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 showProgressView = false
             }

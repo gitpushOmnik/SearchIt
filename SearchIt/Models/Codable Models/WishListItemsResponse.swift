@@ -1,11 +1,12 @@
-//
-//  WishListItemsResponse.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/23/23.
-//
+/**
+ `WishListItemsResponse`
 
-import SwiftUI
+ A data structure representing the response containing wish list items.
+
+ - Author: Omkar Nikhal
+ - Date: 11/23/23
+ */
+import Foundation
 
 struct WishListItemsResponse: Codable {
     let itemDetails: ItemDetails?

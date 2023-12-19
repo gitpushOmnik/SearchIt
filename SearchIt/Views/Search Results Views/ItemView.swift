@@ -1,18 +1,29 @@
-//
-//  ItemView.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 12/5/23.
-//
+/**
+ `ItemView`
 
+ A SwiftUI view displaying details of a search result item or a wish list item.
+
+ - Author: Omkar Nikhal
+ - Date: 12/5/23
+ */
 import SwiftUI
 import Kingfisher
 
 struct ItemView: View {
     
+    /// The search result item to display.
     var searchResultItem: SearchResultItem?
+    
+    /// The wish list item to display.
     var wishListItem: WishListItem?
     
+    /**
+     Initializes an `ItemView` with either a search result item or a wish list item.
+
+     - Parameters:
+        - searchResultItem: The search result item to display.
+        - wishListItem: The wish list item to display.
+     */
     init(searchResultItem: SearchResultItem?, wishListItem: WishListItem?) {
         self.searchResultItem = searchResultItem
         self.wishListItem = wishListItem
@@ -20,8 +31,9 @@ struct ItemView: View {
     
     var body: some View {
         if let searchResultItem = searchResultItem {
+            // Displaying search result item details
             KFImage.url(URL(string: searchResultItem.itemImageURL ?? ""))
-                .placeholder{Color.gray}
+                .placeholder { Color.gray }
                 .resizable()
                 .frame(width: Self.listRowImageWidth, height: Self.listRowImageHeight)
             
@@ -51,8 +63,9 @@ struct ItemView: View {
                 }
             }
         } else if let wishListItem = wishListItem {
+            // Displaying wish list item details
             KFImage.url(URL(string: wishListItem.itemImageURL ?? ""))
-                .placeholder{Color.gray}
+                .placeholder { Color.gray }
                 .resizable()
                 .frame(width: Self.listRowImageWidth, height: Self.listRowImageHeight)
             
@@ -86,8 +99,15 @@ struct ItemView: View {
 }
 
 extension ItemView {
+    /// The placeholder text for N/A (Not Available).
     static let naText = "N/A"
+    
+    /// The height of the list row image.
     static let listRowImageHeight = 79.0
+    
+    /// The width of the list row image.
     static let listRowImageWidth = 82.0
+    
+    /// The spacing between list items.
     static let listItemsSpacing = 7.0
 }

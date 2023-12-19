@@ -1,28 +1,38 @@
-//
-//  ItemReturnsView.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 12/5/23.
-//
+/**
+ `ItemReturnsView`
 
+ A SwiftUI view to display return policy information for an item.
+
+ - Author: Omkar Nikhal
+ - Date: 12/5/23
+ */
 import SwiftUI
 
 struct ItemReturnsView: View {
     
+    /// The view model responsible for handling item details.
     @ObservedObject var itemDetailsViewModel: ItemDetailsViewModel
     
+    /// Initializes an `ItemReturnsView` with the provided `ItemDetailsViewModel`.
+    /// - Parameter itemDetailsViewModel: The view model for item details.
     init(_ itemDetailsViewModel: ItemDetailsViewModel) {
         self.itemDetailsViewModel = itemDetailsViewModel
     }
     
     var body: some View {
-        if itemDetailsViewModel.currentItem?.itemReturnsAccpeted != nil || itemDetailsViewModel.currentItem?.itemRefundMode != nil || itemDetailsViewModel.currentItem?.itemRetunsWithin != nil || itemDetailsViewModel.currentItem?.itemShippingCostPaidBy != nil {
+        // Check if return policy information is available
+        if itemDetailsViewModel.currentItem?.itemReturnsAccpeted != nil ||
+            itemDetailsViewModel.currentItem?.itemRefundMode != nil ||
+            itemDetailsViewModel.currentItem?.itemRetunsWithin != nil ||
+            itemDetailsViewModel.currentItem?.itemShippingCostPaidBy != nil {
             
+            // Display return policy information
             VStack(alignment: .leading, spacing: 0) {
                 Divider()
                     .frame(height: 1)
                     .overlay(Color(uiColor: UIColor.lightGray))
                 
+                // Return policy header
                 HStack {
                     Image(systemName: Self.returnImage)
                         .font(.body)
@@ -35,9 +45,9 @@ struct ItemReturnsView: View {
                     .frame(height: 1)
                     .overlay(Color(uiColor: UIColor.lightGray))
                 
+                // Return policy details
                 VStack(spacing: 6) {
                     if let returnsAccepted = itemDetailsViewModel.currentItem?.itemReturnsAccpeted {
-                        
                         HStack {
                             Text(Self.policyText)
                                 .multilineTextAlignment(.center)
@@ -50,7 +60,6 @@ struct ItemReturnsView: View {
                     }
                     
                     if let refundMode = itemDetailsViewModel.currentItem?.itemRefundMode {
-                        
                         HStack {
                             Text(Self.refundModeText)
                                 .multilineTextAlignment(.center)
@@ -63,7 +72,6 @@ struct ItemReturnsView: View {
                     }
                     
                     if let refundWithin = itemDetailsViewModel.currentItem?.itemRetunsWithin {
-                        
                         HStack {
                             Text(Self.returnsWithinText)
                                 .multilineTextAlignment(.center)
@@ -76,7 +84,6 @@ struct ItemReturnsView: View {
                     }
                     
                     if let shippingCostPaidBy = itemDetailsViewModel.currentItem?.itemShippingCostPaidBy {
-                        
                         HStack {
                             Text(Self.shippingCostPaidByText)
                                 .multilineTextAlignment(.center)

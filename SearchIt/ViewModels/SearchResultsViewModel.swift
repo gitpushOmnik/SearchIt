@@ -1,19 +1,30 @@
-//
-//  ServerViewModel.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/21/23.
-//
+/**
+ `SearchResultsViewModel`
 
+ The ViewModel responsible for managing search results.
+
+ - Author: Omkar Nikhal
+ - Date: 11/21/23
+ */
 import Foundation
 import Alamofire
 
 class SearchResultsViewModel: ObservableObject {
     
+    /// Published property representing the list of search result items.
     @Published var searchResultItems: [SearchResultItem] = []
+    
+    /// Published property indicating whether search results are currently being loaded.
     @Published var isSearchResultsLoading: Bool = false
+    
+    /// Dictionary to map item IDs to their shipping costs.
     @Published var shippingCostMapping: Dictionary<String?, String?> = Dictionary<String?, String?>()
     
+    /**
+     Fetches search result items based on the provided search query.
+
+     - Parameter searchResultsQuery: The search query to fetch results.
+     */
     func getSearchResultItems(_ searchResultsQuery: String) {
         isSearchResultsLoading = true
         let finalSearchResultsQuery = Self.getResultsURLString + searchResultsQuery
@@ -36,6 +47,11 @@ class SearchResultsViewModel: ObservableObject {
         }
     }
     
+    /**
+     Processes the decoded JSON response and updates the ViewModel with search results.
+
+     - Parameter decodedJSONResponse: The decoded JSON response.
+     */
     func processDecodedResponse(_ decodedJSONResponse: FindItemsAdvancedResponse){
         
         guard let searchResultsResponse = decodedJSONResponse.findItemsAdvancedResponse,
@@ -148,6 +164,9 @@ class SearchResultsViewModel: ObservableObject {
         self.isSearchResultsLoading = false
     }
     
+    /**
+     Clears the list of search result items and the shipping cost mapping.
+     */
     func clearSearchResults() {
         searchResultItems = []
         shippingCostMapping = Dictionary<String?, String?>()
@@ -155,12 +174,25 @@ class SearchResultsViewModel: ObservableObject {
 }
 
 extension SearchResultsViewModel  {
+    
+    // Static properties and constants
+    
+    /// URL string for fetching search results.
     static let getResultsURLString = "https://csci571-assi3-nikhal-backend.uc.r.appspot.com/getSearchItems?"
+    
+    /// Success message for API response.
     static let success = "Success"
+    
+    /// Placeholder string for N/A values.
     static let naString = "NA"
+    
+    /// Currency symbol for displaying prices.
     static let dollarText = "$"
+    
+    /// Text for free shipping.
     static let freeShippingText = "FREE SHIPPING"
     
+    /// Enumeration representing item conditions.
     enum ItemCondition: String {
         case new = "NEW"
         case refurbished = "REFURBISHED"

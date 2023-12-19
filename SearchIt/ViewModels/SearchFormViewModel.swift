@@ -1,23 +1,39 @@
-//
-//  SearchFormViewModel.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/20/23.
-//
+/**
+ `SearchFormViewModel`
 
+ The ViewModel responsible for managing the search form functionality.
+
+ - Author: Omkar Nikhal
+ - Date: 11/20/23
+ */
 import Foundation
 import SwiftUI
 import Alamofire
 
 class SearchFormViewModel: ObservableObject {
+    
+    /// Published property representing the search form.
     @Published var searchForm: SearchForm
+    
+    /// Published property representing the toast for displaying messages.
     @Published var toast: Toast
     
+    /**
+     Initializes the SearchFormViewModel with a search form and a toast.
+
+     - Parameter searchForm: The search form to be managed.
+     - Parameter toast: The toast for displaying messages.
+     */
     init(searchForm: SearchForm, toast: Toast) {
         self.searchForm = searchForm
         self.toast = toast
     }
     
+    /**
+     Validates the search form, displaying a toast message if validation fails.
+
+     - Returns: A boolean indicating whether the search form is valid.
+     */
     func validateSearchForm() -> Bool{
         
         let keywordsHasWhitespace = searchForm.keywords.trimmingCharacters(in: .whitespaces).isEmpty
@@ -55,7 +71,11 @@ class SearchFormViewModel: ObservableObject {
         return true
     }
     
-        
+    /**
+     Generates a search results query based on the search form.
+
+     - Returns: The generated search results query.
+     */
     func generateSearchResultsQuery() -> String {
         
         let keywordsString = Self.keywordsParameter + searchForm.keywords
@@ -128,6 +148,9 @@ class SearchFormViewModel: ObservableObject {
         return searchQueryString
     }
     
+    /**
+     Fetches the current location and updates the search form with the zipcode.
+     */
     func fetchCurrentLocation() {
         Task {
             AF.request(Self.currentLocationAPI)
@@ -143,6 +166,9 @@ class SearchFormViewModel: ObservableObject {
         }
     }
     
+    /**
+     Fetches zipcodes based on user input and updates the search form with fetched zipcodes.
+     */
     func fetchZipcodes() {
         Task {
             AF.request(Self.autoCompleteAPI + searchForm.userInputZipcode)
@@ -159,6 +185,11 @@ class SearchFormViewModel: ObservableObject {
         }
     }
     
+    /**
+     Stores fetched zipcodes in the search form.
+
+     - Parameter zipcodeResponse: The response containing fetched zipcodes.
+     */
     func storeFetchedZipcodes(_ zipcodeResponse: ZipcodeResponse) {
         searchForm.fetchedZipcodes = []
 
@@ -169,6 +200,9 @@ class SearchFormViewModel: ObservableObject {
         }
     }
     
+    /**
+      Clears the search form, resetting all fields to their default values.
+      */
     func clearForm() {
         searchForm.keywords = ""
         searchForm.categoryType = "All"
@@ -188,26 +222,42 @@ class SearchFormViewModel: ObservableObject {
 }
 
 extension SearchFormViewModel {
+    // Static properties and constants
     
+    /// Toast message for mandatory keywords.
     static let madatoryKeywordsText = "Keyword is mandatory"
+    
+    /// Toast message for mandatory zipcode.
     static let mandatoryZipcodeText = "Zipcode is mandatory"
+    
+    /// Regular expression for validating zipcodes.
     static let zipcodeRegex = "[0-9]{5,5}"
+    
+    /// Toast message for invalid zipcodes.
     static let invalidZipcodeText = "Zipcode is invalid"
+    
+    /// Default distance for search.
     static let defaultDistance = "10"
+    
+    /// API endpoint for fetching current location.
     static let currentLocationAPI = "http://ip-api.com/json"
+    
+    /// API endpoint for autocompleting zipcodes.
     static let autoCompleteAPI = "https://csci571-assi3-nikhal-backend.uc.r.appspot.com/autocompleteZipcode?zipcode="
     
+    /// Enumeration representing category types.
     enum CategoryType: String {
         case art = "Art"
         case baby = "Baby"
         case books = "Books"
-        case clothing = "Clothing,Shoes & Accesories"
+        case clothing = "Clothing,Shoes & Accessories"
         case computers = "Computers/Tablets & Networking"
         case health = "Health & Beauty"
         case music = "Music"
         case videoGames = "Video games & Consoles"
     }
     
+    /// Enumeration representing category parameters.
     enum CategoryParameter: String {
         case art = "art"
         case baby = "baby"
@@ -219,12 +269,27 @@ extension SearchFormViewModel {
         case videoGames = "videoGames"
     }
     
+    /// URL parameter for keywords.
     static let keywordsParameter = "keywords="
+    
+    /// URL parameter for category type.
     static let categoryTypeParameter = "&categoryType="
+    
+    /// URL parameter for new condition.
     static let newConditionParameter = "&condition=new"
+    
+    /// URL parameter for used condition.
     static let usedConditionParameter = "&condition=used"
+    
+    /// URL parameter for local shipping.
     static let localShippingParameter = "&shipping=local"
+    
+    /// URL parameter for free shipping.
     static let freeShippingParameter = "&shipping=free"
+    
+    /// URL parameter for distance.
     static let distanceParameter = "&distance="
+    
+    /// URL parameter for zipcode.
     static let zipcodeParameter = "&zipcode="
 }

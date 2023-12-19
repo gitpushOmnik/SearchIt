@@ -1,22 +1,39 @@
-//
-//  WishListViewModel.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/22/23.
-//
+/**
+ `WishListViewModel`
 
+ The ViewModel responsible for managing the wishlist functionality.
+
+ - Author: Omkar Nikhal
+ - Date: 11/22/23
+ */
 import Foundation
 import Alamofire
 
 class WishListViewModel: ObservableObject {
     
+    /// Published property representing the list of wishlist items.
     @Published var wishListItems: [WishListItem] = []
+    
+    /// Published property representing the list of wishlist item IDs.
     @Published var wishListItemIDs: [String] = []
+    
+    /// Published property indicating whether the wishlist is currently loading.
     @Published var isWishListLoading: Bool = false
+    
+    /// Published property representing the total shopping cost of items in the wishlist.
     @Published var totalShoppingCost: Double = 0.0
+    
+    /// Published property indicating whether an item has been added to the wishlist.
     @Published var addedToWishList: Bool = false
+    
+    /// Published property indicating whether an item has been removed from the wishlist.
     @Published var removedFromWishList: Bool = false
     
+    /**
+     Fetches wishlist items based on the provided query.
+
+     - Parameter finalWishListQuery: The final query for fetching wishlist items.
+     */
     func getWishListItems(_ finalWishListQuery: String) {
         if wishListItems.count == 0 {
             isWishListLoading = true
@@ -38,6 +55,13 @@ class WishListViewModel: ObservableObject {
         }
     }
     
+    /**
+     Adds an item to the wishlist.
+
+     - Parameters:
+        - itemID: The ID of the item to be added.
+        - calledFromRoot: Indicates whether the method is called from the root.
+     */
     func addWishListItems(_ itemID: String, _ calledFromRoot: Bool) {
         if calledFromRoot {
             addedToWishList = true
@@ -47,6 +71,13 @@ class WishListViewModel: ObservableObject {
         getWishListItems(addToWishListURLString)
     }
     
+    /**
+     Removes an item from the wishlist.
+
+     - Parameters:
+        - itemID: The ID of the item to be removed.
+        - calledFromRoot: Indicates whether the method is called from the root.
+     */
     func removeFromWishListItems(_ itemID: String, _ calledFromRoot: Bool) {
         if calledFromRoot {
             removedFromWishList = true
@@ -69,8 +100,12 @@ class WishListViewModel: ObservableObject {
         getWishListItems(removeFromWishListURLString)
     }
     
-    func processDecodedWishListResponse(_ decodedJSONResponse: [WishListItemsResponse]){
+    /**
+     Processes the decoded JSON response from the wishlist API.
 
+     - Parameter decodedJSONResponse: The decoded JSON response containing wishlist items.
+     */
+    func processDecodedWishListResponse(_ decodedJSONResponse: [WishListItemsResponse]) {
         guard decodedJSONResponse.count > 0 else {
             self.isWishListLoading = false
             return
@@ -155,14 +190,33 @@ class WishListViewModel: ObservableObject {
 }
 
 extension WishListViewModel  {
+    // Static properties and constants
+    
+    /// The URL string for retrieving the wishlist.
     static let getWishListURLString = "https://csci571-assi3-nikhal-backend.uc.r.appspot.com/retrieveWishList"
+    
+    /// Success message.
     static let success = "Success"
+    
+    /// Placeholder string for "Not Available."
     static let naString = "NA"
+    
+    /// URL query for adding items to the wishlist.
     static let addToWishListQuery = "https://csci571-assi3-nikhal-backend.uc.r.appspot.com/modifyWishList/?operation=addToWishList&"
+    
+    /// URL query for removing items from the wishlist.
     static let removeFromWishListQuery = "https://csci571-assi3-nikhal-backend.uc.r.appspot.com/modifyWishList/?operation=deleteFromWishList&"
+    
+    /// String representing free shipping.
     static let freeShipping = "FREE SHIPPING"
+    
+    /// Identifier string for item ID in the query.
     static let idString = "id="
+    
+    /// Currency symbol.
     static let dollarText = "$"
+    
+    /// Enumeration representing item conditions.
     enum ItemCondition: String {
         case new = "NEW"
         case refurbished = "REFURBISHED"

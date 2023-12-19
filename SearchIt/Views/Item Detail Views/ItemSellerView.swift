@@ -1,28 +1,37 @@
-//
-//  ItemSellerView.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 12/5/23.
-//
+/**
+ `ItemSellerView`
 
+ A SwiftUI view to display seller information for an item.
+
+ - Author: Omkar Nikhal
+ - Date: 12/5/23
+ */
 import SwiftUI
 
 struct ItemSellerView: View {
+    
+    /// The view model responsible for handling item details.
     @ObservedObject var itemDetailsViewModel: ItemDetailsViewModel
 
+    /// Initializes an `ItemSellerView` with the provided `ItemDetailsViewModel`.
+    /// - Parameter itemDetailsViewModel: The view model for item details.
     init(_ itemDetailsViewModel: ItemDetailsViewModel) {
         self.itemDetailsViewModel = itemDetailsViewModel
     }
     
     var body: some View {
-        if itemDetailsViewModel.currentItem?.itemStoreURL != nil || 
+        // Check if seller information is available
+        if itemDetailsViewModel.currentItem?.itemStoreURL != nil ||
             itemDetailsViewModel.currentItem?.itemFeedbackScore != nil ||
             itemDetailsViewModel.currentItem?.itemFeedbackPercent != nil {
+            
+            // Display seller information
             VStack(alignment: .leading, spacing: 0) {
                 Divider()
                     .frame(height: 1)
                     .overlay(Color(uiColor: UIColor.lightGray))
                 
+                // Seller header
                 HStack {
                     Image(systemName: Self.storeLogo)
                         .font(.body)
@@ -36,9 +45,11 @@ struct ItemSellerView: View {
                     .frame(height: 1)
                     .overlay(Color(uiColor: UIColor.lightGray))
                 
+                // Seller details
                 VStack(spacing: 6) {
-                    
-                    if let storeName = itemDetailsViewModel.currentItem?.itemStoreName, let storeURL = itemDetailsViewModel.currentItem?.itemStoreURL {
+                    // Display store name and link to the store
+                    if let storeName = itemDetailsViewModel.currentItem?.itemStoreName,
+                       let storeURL = itemDetailsViewModel.currentItem?.itemStoreURL {
                         HStack {
                             Text(Self.storeNameText)
                                 .multilineTextAlignment(.center)
@@ -51,6 +62,7 @@ struct ItemSellerView: View {
                         }
                     }
                     
+                    // Display feedback score
                     if let feedbackScore = itemDetailsViewModel.currentItem?.itemFeedbackScore {
                         HStack {
                             Text(Self.feedbackScoreText)
@@ -63,8 +75,8 @@ struct ItemSellerView: View {
                         }
                     }
                     
+                    // Display popularity (feedback percentage)
                     if let feedbackPercent = itemDetailsViewModel.currentItem?.itemFeedbackPercent {
-                        
                         HStack {
                             Text(Self.popularityText)
                                 .multilineTextAlignment(.center)

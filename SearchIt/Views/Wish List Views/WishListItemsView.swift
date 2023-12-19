@@ -1,17 +1,25 @@
-//
-//  WishListItemsView.swift
-//  CSCI571-Assi4-nikhal
-//
-//  Created by Omkar Nikhal on 11/23/23.
-//
+/**
+ `WishListItemsView`
 
+ A SwiftUI view displaying items in the wish list, including total cost and swipe-to-delete functionality.
+
+ - Author: Omkar Nikhal
+ - Date: 11/23/23
+ */
 import SwiftUI
 import Kingfisher
 
 struct WishListItemsView: View {
     
+    /// The view model for wish list items.
     @ObservedObject var wishListViewModel: WishListViewModel
     
+    /**
+     Initializes a `WishListItemsView` with the required view model.
+
+     - Parameters:
+        - wishListViewModel: The view model for wish list items.
+     */
     init(_ wishListViewModel: WishListViewModel) {
         self.wishListViewModel = wishListViewModel
     }
@@ -57,12 +65,27 @@ struct WishListItemsView: View {
 }
 
 extension WishListItemsView {
+    /// The text displayed while wish list items are loading.
     static let loadingText = "Loading..."
+    
+    /// The text displayed when the wish list is empty.
     static let wishlistEmptyText = "No items in wishlist"
+    
+    /// The text for the total shopping cost in the wish list.
     static let totalShoppingText = "Wishlist total("
+    
+    /// The text indicating the number of items in the wish list.
     static let itemsText = ") items:"
+    
+    /// The dollar sign text.
     static let dollarText = "$"
+    
+    /// The label for the delete action in swipe-to-delete.
     static let deleteLabel = "Delete"
+    
+    /// The system image name for the trash fill icon.
     static let trashFillIcon = "trash.fill"
+    
+    /// The navigation title for the wish list view.
     static let navigationTitleText = "Favorites"
 }
