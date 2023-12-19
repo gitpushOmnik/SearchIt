@@ -8,12 +8,12 @@ The development adheres to the SwiftUI paradigm, providing a visually appealing 
 
 # Technologies and Frameworks Used:
 
-SwiftUI
-Alamofire
-Kingfisher
-MongoDB
-NodeJS
-Google Cloud
+SwiftUI  
+Alamofire  
+Kingfisher   
+MongoDB  
+NodeJS  
+Google Cloud  
 
 
 # Implementation:
