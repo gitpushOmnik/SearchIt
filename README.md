@@ -20,33 +20,33 @@ Google Cloud
 
 ## 1. Search Form:
 
-Components include Keyword, Category, Condition checkboxes, Shipping checkboxes, Distance, Custom Location toggle, Zipcode, SEARCH button, CLEAR button.
-Current Location: Use Apple's location service or ip-api.com.
-Validation: Implement validation for empty keyword and display appropriate messages.
+1. Components include Keyword, Category, Condition checkboxes, Shipping checkboxes, Distance, Custom Location toggle, Zipcode, SEARCH button, CLEAR button.  
+1. Current Location: Use Apple's location service or ip-api.com.  
+1. Validation: Implement validation for empty keyword and display appropriate messages.  
 
 ## 2. Search Results:
 
-Display loading spinner while searching.
-Show search results as a table with product details.
-Each table cell includes product image, title, price, shipping cost, zipcode, condition, and a Wishlist button.
+1. Display loading spinner while searching.  
+1. Show search results as a table with product details.  
+1. Each table cell includes product image, title, price, shipping cost, zipcode, condition, and a Wishlist button.  
 
 ## 3. Product Details:
 
-Tabs for Product Info, Shipping Info, Google Photos, and Similar Products.
-Share on Facebook and Wishlist buttons.
-Each tab has a loading spinner.
-Product Info tab displays product images, title, price, and description.
-Shipping Info tab shows seller, shipping, and return policy information.
-Google Photos tab fetches images using the product title.
-Similar Products tab allows sorting and displays items in a grid.
+1. Tabs for Product Info, Shipping Info, Google Photos, and Similar Products.  
+1. Share on Facebook and Wishlist buttons.  
+1. Each tab has a loading spinner.  
+1. Product Info tab displays product images, title, price, and description.  
+1. Shipping Info tab shows seller, shipping, and return policy information.    
+1. Google Photos tab fetches images using the product title.  
+1. Similar Products tab allows sorting and displays items in a grid.  
 
 ## 4. Wish List:
 
-Switch between Search and Wish List screens using a favorite icon.
-Display Wish List products in a table with the same structure as search results.
-Show total number of items and sum of prices in the Wish List.
-Use MongoDB to store Wish List data.
-Allow users to delete items from the Wish List.
+1. Switch between Search and Wish List screens using a favorite icon.  
+1. Display Wish List products in a table with the same structure as search results.  
+1. Show total number of items and sum of prices in the Wish List.  
+1. Use MongoDB to store Wish List data.  
+1. Allow users to delete items from the Wish List.  
 
 
 ### Video link for demonstration: https://drive.google.com/file/d/1QjKIxINl3-p6aG3mJxwWKezItVsYisRi/view?usp=drive_link
